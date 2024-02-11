@@ -73,8 +73,7 @@ class InitUserInfoActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
-            val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(
+            val mTimePicker: TimePickerDialog = TimePickerDialog(
                 this,
                 TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
@@ -142,6 +141,7 @@ class InitUserInfoActivity : AppCompatActivity() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()

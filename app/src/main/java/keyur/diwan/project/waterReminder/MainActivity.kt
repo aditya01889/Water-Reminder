@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         notificStatus = sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY, true)
         val alarm = AlarmHelper()
         if (!alarm.checkAlarm(this) && notificStatus) {
-            binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
+            binding.btnNotific.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_bell))
             alarm.setAlarm(
                 this,
                 sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
@@ -88,9 +89,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (notificStatus) {
-            binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
+            binding.btnNotific.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_bell))
         } else {
-            binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell_disabled))
+            binding.btnNotific.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_bell_disabled))
         }
 
         sqliteHelper.addAll(dateNow, 0, totalIntake)
@@ -118,12 +119,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 selectedOption = null
                 binding.tvCustom.text = "Custom"
-                binding.op50ml.background = getDrawable(outValue.resourceId)
-                binding.op100ml.background = getDrawable(outValue.resourceId)
-                binding.op150ml.background = getDrawable(outValue.resourceId)
-                binding.op200ml.background = getDrawable(outValue.resourceId)
-                binding.op250ml.background = getDrawable(outValue.resourceId)
-                binding.opCustom.background = getDrawable(outValue.resourceId)
+                binding.op50ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+                binding.op100ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+                binding.op150ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+                binding.op200ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+                binding.op250ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+                binding.opCustom.background = AppCompatResources.getDrawable(this, outValue.resourceId)
 
                 // remove pending notifications
                 val mNotificationManager : NotificationManager =
@@ -141,14 +142,14 @@ class MainActivity : AppCompatActivity() {
             notificStatus = !notificStatus
             sharedPref.edit().putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus).apply()
             if (notificStatus) {
-                binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
+                binding.btnNotific.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_bell))
                 Snackbar.make(it, "Notification Enabled..", Snackbar.LENGTH_SHORT).show()
                 alarm.setAlarm(
                     this,
                     sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
                 )
             } else {
-                binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell_disabled))
+                binding.btnNotific.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_bell_disabled))
                 Snackbar.make(it, "Notification Disabled..", Snackbar.LENGTH_SHORT).show()
                 alarm.cancelAlarm(this)
             }
@@ -164,12 +165,12 @@ class MainActivity : AppCompatActivity() {
                 snackbar?.dismiss()
             }
             selectedOption = 50
-            binding.op50ml.background = getDrawable(R.drawable.option_select_bg)
-            binding.op100ml.background = getDrawable(outValue.resourceId)
-            binding.op150ml.background = getDrawable(outValue.resourceId)
-            binding.op200ml.background = getDrawable(outValue.resourceId)
-            binding.op250ml.background = getDrawable(outValue.resourceId)
-            binding.opCustom.background = getDrawable(outValue.resourceId)
+            binding.op50ml.background = AppCompatResources.getDrawable(this, R.drawable.option_select_bg)
+            binding.op100ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op150ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op200ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op250ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.opCustom.background = AppCompatResources.getDrawable(this, outValue.resourceId)
 
         }
 
@@ -178,12 +179,12 @@ class MainActivity : AppCompatActivity() {
                 snackbar?.dismiss()
             }
             selectedOption = 100
-            binding.op50ml.background = getDrawable(outValue.resourceId)
-            binding.op100ml.background = getDrawable(R.drawable.option_select_bg)
-            binding.op150ml.background = getDrawable(outValue.resourceId)
-            binding.op200ml.background = getDrawable(outValue.resourceId)
-            binding.op250ml.background = getDrawable(outValue.resourceId)
-            binding.opCustom.background = getDrawable(outValue.resourceId)
+            binding.op50ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op100ml.background = AppCompatResources.getDrawable(this, R.drawable.option_select_bg)
+            binding.op150ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op200ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op250ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.opCustom.background = AppCompatResources.getDrawable(this, outValue.resourceId)
 
         }
 
@@ -192,12 +193,12 @@ class MainActivity : AppCompatActivity() {
                 snackbar?.dismiss()
             }
             selectedOption = 150
-            binding.op50ml.background = getDrawable(outValue.resourceId)
-            binding.op100ml.background = getDrawable(outValue.resourceId)
-            binding.op150ml.background = getDrawable(R.drawable.option_select_bg)
-            binding.op200ml.background = getDrawable(outValue.resourceId)
-            binding.op250ml.background = getDrawable(outValue.resourceId)
-            binding.opCustom.background = getDrawable(outValue.resourceId)
+            binding.op50ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op100ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op150ml.background = AppCompatResources.getDrawable(this, R.drawable.option_select_bg)
+            binding.op200ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op250ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.opCustom.background = AppCompatResources.getDrawable(this, outValue.resourceId)
 
         }
 
@@ -206,12 +207,12 @@ class MainActivity : AppCompatActivity() {
                 snackbar?.dismiss()
             }
             selectedOption = 200
-            binding.op50ml.background = getDrawable(outValue.resourceId)
-            binding.op100ml.background = getDrawable(outValue.resourceId)
-            binding.op150ml.background = getDrawable(outValue.resourceId)
-            binding.op200ml.background = getDrawable(R.drawable.option_select_bg)
-            binding.op250ml.background = getDrawable(outValue.resourceId)
-            binding.opCustom.background = getDrawable(outValue.resourceId)
+            binding.op50ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op100ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op150ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op200ml.background = AppCompatResources.getDrawable(this, R.drawable.option_select_bg)
+            binding.op250ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.opCustom.background = AppCompatResources.getDrawable(this, outValue.resourceId)
 
         }
 
@@ -220,12 +221,12 @@ class MainActivity : AppCompatActivity() {
                 snackbar?.dismiss()
             }
             selectedOption = 250
-            binding.op50ml.background = getDrawable(outValue.resourceId)
-            binding.op100ml.background = getDrawable(outValue.resourceId)
-            binding.op150ml.background = getDrawable(outValue.resourceId)
-            binding.op200ml.background = getDrawable(outValue.resourceId)
-            binding.op250ml.background = getDrawable(R.drawable.option_select_bg)
-            binding.opCustom.background = getDrawable(outValue.resourceId)
+            binding.op50ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op100ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op150ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op200ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op250ml.background = AppCompatResources.getDrawable(this, R.drawable.option_select_bg)
+            binding.opCustom.background = AppCompatResources.getDrawable(this, outValue.resourceId)
 
         }
 
@@ -256,12 +257,12 @@ class MainActivity : AppCompatActivity() {
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
 
-            binding.op50ml.background = getDrawable(outValue.resourceId)
-            binding.op100ml.background = getDrawable(outValue.resourceId)
-            binding.op150ml.background = getDrawable(outValue.resourceId)
-            binding.op200ml.background = getDrawable(outValue.resourceId)
-            binding.op250ml.background = getDrawable(outValue.resourceId)
-            binding.opCustom.background = getDrawable(R.drawable.option_select_bg)
+            binding.op50ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op100ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op150ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op200ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.op250ml.background = AppCompatResources.getDrawable(this, outValue.resourceId)
+            binding.opCustom.background = AppCompatResources.getDrawable(this, R.drawable.option_select_bg)
 
         }
 
@@ -287,6 +288,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.LimitLine
@@ -104,7 +105,7 @@ class StatsActivity : AppCompatActivity() {
             dataSet.lineWidth = 2.5f
             dataSet.color = ContextCompat.getColor(this, R.color.colorSecondaryDark)
             dataSet.setDrawFilled(true)
-            dataSet.fillDrawable = getDrawable(R.drawable.graph_fill_gradiant)
+            dataSet.fillDrawable = AppCompatResources.getDrawable(this, R.drawable.graph_fill_gradiant)
             dataSet.setDrawValues(false)
             dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
 
@@ -124,11 +125,7 @@ class StatsActivity : AppCompatActivity() {
                 binding.remainingIntake.text = "0 ml"
             }
 
-            binding.targetIntake.text = "${sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
-            )
-            } ml"
+            binding.targetIntake.text = "${sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)} ml"
 
             val percentage = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / sharedPref.getInt(
                 AppUtils.TOTAL_INTAKE,

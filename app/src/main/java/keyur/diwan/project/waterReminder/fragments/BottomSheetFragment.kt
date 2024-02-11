@@ -139,8 +139,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
 
-            val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(
+            val mTimePicker: TimePickerDialog = TimePickerDialog(
                 mCtx,
                 TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
@@ -164,8 +163,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
-            val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(
+            val mTimePicker: TimePickerDialog = TimePickerDialog(
                 mCtx,
                 TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
 
@@ -274,6 +272,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == 999) {
 
