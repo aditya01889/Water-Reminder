@@ -13,15 +13,18 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import keyur.diwan.project.waterReminder.databinding.ActivityMainBinding
+import keyur.diwan.project.waterReminder.databinding.ActivityStatsBinding
 import keyur.diwan.project.waterReminder.helpers.SqliteHelper
 import keyur.diwan.project.waterReminder.utils.AppUtils
 import keyur.diwan.project.waterReminder.utils.ChartXValueFormatter
-import kotlinx.android.synthetic.main.activity_stats.*
+//import kotlinx.android.synthetic.main.activity_stats.*
 import kotlin.math.max
 
 
 class StatsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityStatsBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var sqliteHelper: SqliteHelper
     private var totalPercentage: Float = 0f
@@ -29,12 +32,14 @@ class StatsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stats)
+        //setContentView(R.layout.activity_stats)
+        binding = ActivityStatsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         sqliteHelper = SqliteHelper(this)
 
-        btnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             finish()
         }
 
@@ -60,27 +65,27 @@ class StatsActivity : AppCompatActivity() {
 
         if (!entries.isEmpty()) {
 
-            chart.description.isEnabled = false
-            chart.animateY(1000, Easing.Linear)
-            chart.viewPortHandler.setMaximumScaleX(1.5f)
-            chart.xAxis.setDrawGridLines(false)
-            chart.xAxis.position = XAxis.XAxisPosition.TOP
-            chart.xAxis.isGranularityEnabled = true
-            chart.legend.isEnabled = false
-            chart.fitScreen()
-            chart.isAutoScaleMinMaxEnabled = true
-            chart.scaleX = 1f
-            chart.setPinchZoom(true)
-            chart.isScaleXEnabled = true
-            chart.isScaleYEnabled = false
-            chart.axisLeft.textColor = Color.BLACK
-            chart.xAxis.textColor = Color.BLACK
-            chart.axisLeft.setDrawAxisLine(false)
-            chart.xAxis.setDrawAxisLine(false)
-            chart.setDrawMarkers(false)
-            chart.xAxis.labelCount = 5
+            binding.chart.description.isEnabled = false
+            binding.chart.animateY(1000, Easing.Linear)
+            binding.chart.viewPortHandler.setMaximumScaleX(1.5f)
+            binding.chart.xAxis.setDrawGridLines(false)
+            binding.chart.xAxis.position = XAxis.XAxisPosition.TOP
+            binding.chart.xAxis.isGranularityEnabled = true
+            binding.chart.legend.isEnabled = false
+            binding.chart.fitScreen()
+            binding.chart.isAutoScaleMinMaxEnabled = true
+            binding.chart.scaleX = 1f
+            binding.chart.setPinchZoom(true)
+            binding.chart.isScaleXEnabled = true
+            binding.chart.isScaleYEnabled = false
+            binding.chart.axisLeft.textColor = Color.BLACK
+            binding.chart.xAxis.textColor = Color.BLACK
+            binding.chart.axisLeft.setDrawAxisLine(false)
+            binding.chart.xAxis.setDrawAxisLine(false)
+            binding.chart.setDrawMarkers(false)
+            binding.chart.xAxis.labelCount = 5
 
-            val leftAxis = chart.axisLeft
+            val leftAxis = binding.chart.axisLeft
             leftAxis.axisMinimum = 0f // always start at zero
             val maxObject: Entry = entries.maxBy { it.y }!! // entries is not empty here
             leftAxis.axisMaximum = max(a = maxObject.y, b = 100f) + 15f // 15% margin on top
@@ -88,7 +93,7 @@ class StatsActivity : AppCompatActivity() {
             targetLine.enableDashedLine(5f, 5f, 0f)
             leftAxis.addLimitLine(targetLine)
 
-            val rightAxis = chart.axisRight
+            val rightAxis = binding.chart.axisRight
             rightAxis.setDrawGridLines(false)
             rightAxis.setDrawZeroLine(false)
             rightAxis.setDrawAxisLine(false)
@@ -104,9 +109,9 @@ class StatsActivity : AppCompatActivity() {
             dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
 
             val lineData = LineData(dataSet)
-            chart.xAxis.valueFormatter = (ChartXValueFormatter(dateArray))
-            chart.data = lineData
-            chart.invalidate()
+            binding.chart.xAxis.valueFormatter = (ChartXValueFormatter(dateArray))
+            binding.chart.data = lineData
+            binding.chart.invalidate()
 
             val remaining = sharedPref.getInt(
                 AppUtils.TOTAL_INTAKE,
@@ -114,12 +119,12 @@ class StatsActivity : AppCompatActivity() {
             ) - sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
 
             if (remaining > 0) {
-                remainingIntake.text = "$remaining ml"
+                binding.remainingIntake.text = "$remaining ml"
             } else {
-                remainingIntake.text = "0 ml"
+                binding.remainingIntake.text = "0 ml"
             }
 
-            targetIntake.text = "${sharedPref.getInt(
+            binding.targetIntake.text = "${sharedPref.getInt(
                 AppUtils.TOTAL_INTAKE,
                 0
             )
@@ -129,8 +134,8 @@ class StatsActivity : AppCompatActivity() {
                 AppUtils.TOTAL_INTAKE,
                 0
             )
-            waterLevelView.centerTitle = "$percentage%"
-            waterLevelView.progressValue = percentage
+            binding.waterLevelView.centerTitle = "$percentage%"
+            binding.waterLevelView.progressValue = percentage
 
         }
     }

@@ -12,14 +12,16 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import keyur.diwan.project.waterReminder.databinding.ActivityInitUserInfoBinding
 import keyur.diwan.project.waterReminder.utils.AppUtils
-import kotlinx.android.synthetic.main.activity_init_user_info.*
+//import kotlinx.android.synthetic.main.activity_init_user_info.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
 class InitUserInfoActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityInitUserInfoBinding
     private var weight: String = ""
     private var workTime: String = ""
     private var wakeupTime: Long = 0
@@ -29,20 +31,21 @@ class InitUserInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding = ActivityInitUserInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val is24h = android.text.format.DateFormat.is24HourFormat(this.applicationContext)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
-        setContentView(R.layout.activity_init_user_info)
+        //setContentView(R.layout.activity_init_user_info)
 
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
 
         wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME, 1558323000000)
         sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
 
-        etWakeUpTime.editText!!.setOnClickListener {
+        binding.etWakeUpTime.editText!!.setOnClickListener() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
 
@@ -56,7 +59,7 @@ class InitUserInfoActivity : AppCompatActivity() {
                     time.set(Calendar.MINUTE, selectedMinute)
                     wakeupTime = time.timeInMillis
 
-                    etWakeUpTime.editText!!.setText(
+                    binding.etWakeUpTime.editText!!.setText(
                         String.format("%02d:%02d", selectedHour, selectedMinute)
                     )
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
@@ -66,7 +69,7 @@ class InitUserInfoActivity : AppCompatActivity() {
         }
 
 
-        etSleepTime.editText!!.setOnClickListener {
+        binding.etSleepTime.setOnClickListener {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
@@ -80,7 +83,7 @@ class InitUserInfoActivity : AppCompatActivity() {
                     time.set(Calendar.MINUTE, selectedMinute)
                     sleepingTime = time.timeInMillis
 
-                    etSleepTime.editText!!.setText(
+                    binding.etSleepTime.editText!!.setText(
                         String.format("%02d:%02d", selectedHour, selectedMinute)
                     )
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
@@ -89,13 +92,14 @@ class InitUserInfoActivity : AppCompatActivity() {
             mTimePicker.show()
         }
 
-        btnContinue.setOnClickListener {
+        binding.btnContinue.setOnClickListener {
 
             val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(init_user_info_parent_layout.windowToken, 0)
+            imm.hideSoftInputFromWindow(binding.initUserInfoParentLayout
+                .windowToken, 0)
 
-            weight = etWeight.editText!!.text.toString()
-            workTime = etWorkTime.editText!!.text.toString()
+            weight = binding.etWeight.editText!!.text.toString()
+            workTime = binding.etWorkTime.editText!!.text.toString()
 
             when {
                 TextUtils.isEmpty(weight) -> Snackbar.make(it, "Please input your weight", Snackbar.LENGTH_SHORT).show()

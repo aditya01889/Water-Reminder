@@ -10,27 +10,31 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import kotlinx.android.synthetic.main.activity_walk_through.*
+import keyur.diwan.project.waterReminder.databinding.ActivityStatsBinding
+import keyur.diwan.project.waterReminder.databinding.ActivityWalkThroughBinding
+
+//import kotlinx.android.synthetic.main.activity_walk_through.*
 
 class WalkThroughActivity : AppCompatActivity() {
     private var viewPagerAdapter: WalkThroughAdapter? = null
-
+    private lateinit var binding: ActivityWalkThroughBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding = ActivityWalkThroughBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
 
-        setContentView(R.layout.activity_walk_through)
+        //setContentView(R.layout.activity_walk_through)
         viewPagerAdapter = WalkThroughAdapter(supportFragmentManager)
-        walkThroughPager.adapter = viewPagerAdapter
-        indicator.setViewPager(walkThroughPager)
+        binding.walkThroughPager.adapter = viewPagerAdapter
+        binding.indicator.setViewPager(binding.walkThroughPager)
     }
 
     override fun onStart() {
         super.onStart()
-        getStarted.setOnClickListener {
+        binding.getStarted.setOnClickListener {
 
             startActivity(Intent(this, InitUserInfoActivity::class.java))
             finish()
