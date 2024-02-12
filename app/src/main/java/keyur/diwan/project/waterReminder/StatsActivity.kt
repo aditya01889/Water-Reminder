@@ -1,5 +1,7 @@
 package keyur.diwan.project.waterReminder
 
+//import kotlinx.android.synthetic.main.activity_stats.*
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.graphics.Color
@@ -14,12 +16,10 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import keyur.diwan.project.waterReminder.databinding.ActivityMainBinding
 import keyur.diwan.project.waterReminder.databinding.ActivityStatsBinding
 import keyur.diwan.project.waterReminder.helpers.SqliteHelper
 import keyur.diwan.project.waterReminder.utils.AppUtils
 import keyur.diwan.project.waterReminder.utils.ChartXValueFormatter
-//import kotlinx.android.synthetic.main.activity_stats.*
 import kotlin.math.max
 
 
@@ -31,6 +31,7 @@ class StatsActivity : AppCompatActivity() {
     private var totalPercentage: Float = 0f
     private var totalGlasses: Float = 0f
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_stats)
@@ -64,7 +65,7 @@ class StatsActivity : AppCompatActivity() {
             Toast.makeText(this, "Empty", Toast.LENGTH_LONG).show()
         }
 
-        if (!entries.isEmpty()) {
+        if (entries.isNotEmpty()) {
 
             binding.chart.description.isEnabled = false
             binding.chart.animateY(1000, Easing.Linear)
@@ -88,7 +89,7 @@ class StatsActivity : AppCompatActivity() {
 
             val leftAxis = binding.chart.axisLeft
             leftAxis.axisMinimum = 0f // always start at zero
-            val maxObject: Entry = entries.maxBy { it.y }!! // entries is not empty here
+            val maxObject: Entry = entries.maxBy { it.y } // entries is not empty here
             leftAxis.axisMaximum = max(a = maxObject.y, b = 100f) + 15f // 15% margin on top
             val targetLine = LimitLine(100f, "")
             targetLine.enableDashedLine(5f, 5f, 0f)

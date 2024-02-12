@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package keyur.diwan.project.waterReminder
 
 import android.content.Intent
@@ -10,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import keyur.diwan.project.waterReminder.databinding.ActivityStatsBinding
 import keyur.diwan.project.waterReminder.databinding.ActivityWalkThroughBinding
 
 //import kotlinx.android.synthetic.main.activity_walk_through.*

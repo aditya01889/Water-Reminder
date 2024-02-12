@@ -1,5 +1,6 @@
 package keyur.diwan.project.waterReminder
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
@@ -23,6 +24,7 @@ import keyur.diwan.project.waterReminder.utils.AppUtils
 //import kotlinx.android.synthetic.main.activity_main.*
 
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -68,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         setWaterLevel(inTook, totalIntake)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
 
@@ -244,13 +247,13 @@ class MainActivity : AppCompatActivity() {
             val userInput = promptsView
                 .findViewById(R.id.etCustomInput) as TextInputLayout
 
-            alertDialogBuilder.setPositiveButton("OK") { dialog, id ->
+            alertDialogBuilder.setPositiveButton("OK") { _, _ ->
                 val inputText = userInput.editText!!.text.toString()
                 if (!TextUtils.isEmpty(inputText)) {
-                    binding.tvCustom.text = "${inputText} ml"
+                    binding.tvCustom.text = "$inputText ml"
                     selectedOption = inputText.toInt()
                 }
-            }.setNegativeButton("Cancel") { dialog, id ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
             }
 
@@ -269,6 +272,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun setWaterLevel(inTook: Int, totalIntake: Int) {
 
         YoYo.with(Techniques.SlideInDown)

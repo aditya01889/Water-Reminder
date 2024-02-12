@@ -19,6 +19,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
+@Suppress("DEPRECATION")
 class InitUserInfoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInitUserInfoBinding
@@ -45,14 +46,13 @@ class InitUserInfoActivity : AppCompatActivity() {
         wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME, 1558323000000)
         sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
 
-        binding.etWakeUpTime.editText!!.setOnClickListener() {
+        binding.etWakeUpTime.editText!!.setOnClickListener {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
 
-            val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 this,
-                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)
@@ -73,9 +73,9 @@ class InitUserInfoActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
-            val mTimePicker: TimePickerDialog = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 this,
-                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)

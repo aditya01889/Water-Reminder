@@ -1,5 +1,7 @@
 package keyur.diwan.project.waterReminder.fragments
 
+//import kotlinx.android.synthetic.main.bottom_sheet_fragment.*
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Context
@@ -15,18 +17,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import keyur.diwan.project.waterReminder.MainActivity
-import keyur.diwan.project.waterReminder.R
 import keyur.diwan.project.waterReminder.databinding.BottomSheetFragmentBinding
 import keyur.diwan.project.waterReminder.helpers.AlarmHelper
 import keyur.diwan.project.waterReminder.helpers.SqliteHelper
 import keyur.diwan.project.waterReminder.utils.AppUtils
-//import kotlinx.android.synthetic.main.bottom_sheet_fragment.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.util.*
+import java.util.Calendar
 
 
-class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
+@Suppress("DEPRECATION")
+class BottomSheetFragment(private val mCtx: Context) : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetFragmentBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +46,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = BottomSheetFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -55,6 +56,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
         _binding = null
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -82,7 +84,7 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             ).getTitle(mCtx)
         )
 
-        binding.radioNotificItervel.setOnClickedButtonListener { button, position ->
+        binding.radioNotificItervel.setOnClickedButtonListener { _, position ->
             notificFrequency = when (position) {
                 0 -> 30
                 1 -> 45
@@ -139,9 +141,9 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
 
-            val mTimePicker: TimePickerDialog = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 mCtx,
-                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)
@@ -163,9 +165,9 @@ class BottomSheetFragment(val mCtx: Context) : BottomSheetDialogFragment() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
-            val mTimePicker: TimePickerDialog = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 mCtx,
-                TimePickerDialog.OnTimeSetListener { timePicker, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)
