@@ -1,5 +1,6 @@
 package keyur.diwan.project.waterReminder
 
+//import kotlinx.android.synthetic.main.activity_init_user_info.*
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -14,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import keyur.diwan.project.waterReminder.databinding.ActivityInitUserInfoBinding
 import keyur.diwan.project.waterReminder.utils.AppUtils
-//import kotlinx.android.synthetic.main.activity_init_user_info.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
