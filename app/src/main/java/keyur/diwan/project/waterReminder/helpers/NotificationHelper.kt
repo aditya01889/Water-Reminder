@@ -3,7 +3,6 @@ package keyur.diwan.project.waterReminder.helpers
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -18,13 +17,13 @@ import keyur.diwan.project.waterReminder.MainActivity
 import keyur.diwan.project.waterReminder.R
 import keyur.diwan.project.waterReminder.utils.AppUtils
 import java.util.*
+import android.app.PendingIntent as PendingIntent1
 
-class NotificationHelper(val ctx: Context) {
+class NotificationHelper(private val ctx: Context) {
     private var notificationManager: NotificationManager? = null
 
     private val CHANNEL_ONE_ID = "io.github.z3r0c00l_2k.aquadroid.CHANNELONE"
     private val CHANNEL_ONE_NAME = "Channel One"
-
 
     private fun createChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -59,9 +58,18 @@ class NotificationHelper(val ctx: Context) {
         title: String,
         body: String,
         notificationsTone: String?
-    ): NotificationCompat.Builder? {
+    ): NotificationCompat.Builder {
         createChannels()
-        val notification = NotificationCompat.Builder(ctx.applicationContext, CHANNEL_ONE_ID)
+        val notificationIntent = Intent(ctx, MainActivity::class.java)
+        notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+        // Adjust the PendingIntent flags for compatibility
+        val pendingIntentFlag =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent1.FLAG_UPDATE_CURRENT or PendingIntent1.FLAG_IMMUTABLE else PendingIntent1.FLAG_UPDATE_CURRENT
+        val contentIntent =
+            PendingIntent1.getActivity(ctx, 99, notificationIntent, pendingIntentFlag)
+
+        return NotificationCompat.Builder(ctx.applicationContext, CHANNEL_ONE_ID)
             .setContentTitle(title)
             .setContentText(body)
             .setLargeIcon(
@@ -72,22 +80,10 @@ class NotificationHelper(val ctx: Context) {
             )
             .setSmallIcon(R.drawable.ic_small_logo)
             .setAutoCancel(true)
-
-        notification.setShowWhen(true)
-
-        notification.setSound(Uri.parse(notificationsTone))
-
-        val notificationIntent = Intent(ctx, MainActivity::class.java)
-
-        notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val contentIntent =
-            PendingIntent.getActivity(ctx, 99, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        notification.setContentIntent(contentIntent)
-
-        return notification
+            .setShowWhen(true)
+            .setSound(Uri.parse(notificationsTone))
+            .setContentIntent(contentIntent)
     }
-
     private fun shallNotify(): Boolean {
         val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         val sqliteHelper = SqliteHelper(ctx)
